@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <!-- <link rel="manifest" href="/manifest.json"> -->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>Breaker</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    
+    <div class="container">
+        <div class="goals">
+          <div>
+
+            <input class="enter" id="enter" type="text" placeholder="enter your goal">
+            <button class="btn-top" id="done">Add</button>
+          </div>
+        <div class="display" id="display" style="color: black;">text comes here</div>
+        <!-- <button id="delete">Delete</button> -->
+        <button class="btn-top" id="clear" onclick="clearStorage()" style="margin-bottom: 30px; margin-top: 15px;">Clear</button>
+      </div>
+        <div class="calendar">
+          <div class="month">
+            <i class="fas fa-angle-left prev"></i>
+            <div class="date">
+              <h1></h1>
+            <p></p>
+          </div>
+          <i class="fas fa-angle-right next"></i>
+        </div>
+        <div class="weekdays">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <div class="days"></div>
+        <!-- <div class="erase">
+          <i class="fas fa-times close"></i>
+          <div class="clear">clear</div>
+        </div> -->
+        <!-- <div class="days" onclick="goToRed()"></div> -->
+      </div>
+      <div class="info">
+        <i class="fas fa-angle-down down">Click for info</i>
+        <div class="info-text" style="display: none;">
+          This is an app to increse your productivity. Add your goal that you want to practice daily, click on your today's date when you finish your task and it will convert to <span style="color: red;">red</span> also you can remove it within 24 hours if you clicked it by mistake by clicking again which will then turn into <span style="color: #777;">grey</span> for more info, <a href=https://www.youtube.com/watch?v=DpOBvWw1oPg target="_blank">click here</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function getAnUpdate(){
+      console.log("dance bhai dance");
+      enter = document.getElementById('enter').value;
+      console.log(enter);
+      enter.value = "ahahaS";
+      if (localStorage.getItem('itemsJson')==null){
+          itemJsonArray = [];
+          itemJsonArray.push([enter])
+          localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+      }
+      else{
+          itemJsonArrayStr = localStorage.getItem('itemsJson')
+          itemJsonArray = JSON.parse(itemJsonArrayStr);
+          itemJsonArray.push([enter]);
+          localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+      }
+      update();
+  }
+  
+  function update(){
+      if (localStorage.getItem('itemsJson')==null){
+          itemJsonArray = [];
+          localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+      }
+      else{
+          itemJsonArrayStr = localStorage.getItem('itemsJson')
+          itemJsonArray = JSON.parse(itemJsonArrayStr);
+      }
+
+      display = document.getElementById("display")
+      let str = "";
+      itemJsonArray.forEach(element => {
+          str += `<div class="display" id="display">${element}</div>`
+      });
+      display.innerHTML = str;
+  }
+  //let enter = document.getElementsByClassName('enter')[0] //tit
+ 
+  //let display = document.getElementsByClassName('display')[0]
+
+  done = document.getElementById("done") //add
+  done.addEventListener("click", getAnUpdate);
+  update();
+  // function deleted(itemIndex){
+  //     console.log("delete", itemIndex);
+  //     itemJsonArrayStr = localStorage.getItem('itemsJson')
+  //     itemJsonArray = JSON.parse(itemJsonArrayStr);
+  //     //delete from array
+  //     itemJsonArray.splice(itemIndex,1)
+  //     localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+  //     update();
+  // }
+
+  function clearStorage(){
+      if (confirm("are u sure?")){
+      console.log('clearing...')
+      localStorage.clear();
+      update();
+      }
+  }
+</script>
+
+
+    <script src="script.js"></script>
+    <!-- <script src="temp1.js"></script> -->
+  </body>
+</html>
